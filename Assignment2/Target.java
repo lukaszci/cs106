@@ -17,6 +17,7 @@ public class Target extends GraphicsProgram {
 	private static final double OUTERMOST_CIRCLE_RADIUS = 662;
 	private static final double MIDDLE_CIRCLE_RADIUS = OUTERMOST_CIRCLE_RADIUS*0.65;
 	private static final double INNERMOST_CIRCLE_RADIUS = OUTERMOST_CIRCLE_RADIUS*0.3;
+	
 	public void run() {
 		drawOutermostCircle();
 		drawMiddleCircle();

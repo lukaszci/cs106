@@ -26,23 +26,23 @@ public class Pyramid extends GraphicsProgram {
 /** Number of bricks in the base of the pyramid */
 	private static final int BRICKS_IN_BASE = 19;
 	
-	private int BOTTOM_LINE_OF_CURRENT_ROW;
-	private int CURRENT_LEVEL_LEFT_WALL;
+	private int bottomLineOfCurrentRow;
+	private int currentLevelLeftWall;
 	
 	public void run() {
-		CURRENT_LEVEL_LEFT_WALL = getWidth()/2 - ((BRICKS_IN_BASE/2))*BRICK_WIDTH;
+		currentLevelLeftWall = getWidth()/2 - ((BRICKS_IN_BASE/2))*BRICK_WIDTH;
 		for(int i=1; i<=BRICKS_IN_BASE;i++) {
-			BOTTOM_LINE_OF_CURRENT_ROW = getHeight() - BRICK_HEIGHT*i;
+			bottomLineOfCurrentRow = getHeight() - BRICK_HEIGHT*i;
 			for(int j=0; j<=(BRICKS_IN_BASE - i);j++){
 				buildBrick();
-				CURRENT_LEVEL_LEFT_WALL = CURRENT_LEVEL_LEFT_WALL + BRICK_WIDTH;
+				currentLevelLeftWall = currentLevelLeftWall + BRICK_WIDTH;
 			} 
-			CURRENT_LEVEL_LEFT_WALL = getWidth()/2 - (BRICKS_IN_BASE/2)*BRICK_WIDTH + (BRICK_WIDTH/2)*i;
+			currentLevelLeftWall = getWidth()/2 - (BRICKS_IN_BASE/2)*BRICK_WIDTH + (BRICK_WIDTH/2)*i;
 		} 
 	} 
 	
 	public void buildBrick() {
-		GRect brick = new GRect(CURRENT_LEVEL_LEFT_WALL,BOTTOM_LINE_OF_CURRENT_ROW,BRICK_WIDTH,BRICK_HEIGHT);
+		GRect brick = new GRect(currentLevelLeftWall, bottomLineOfCurrentRow, BRICK_WIDTH,BRICK_HEIGHT);
 		add(brick);
 	}
 }
