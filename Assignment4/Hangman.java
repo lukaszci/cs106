@@ -21,20 +21,21 @@ public class Hangman extends ConsoleProgram {
 	private String givenLetter;
 	private int remainingLives;
 	private int remainingCharacters;
-	private char extractedChar;
+	private int letterPosition;
 
     public void run() {
     		init();
     		canvas.reset();
     		selectWord();
+    		System.out.println(selectedWord);
     		while (remainingLives > 0 && remainingCharacters > 0) {
     			givenLetter = readLine("Give me a letter: ").toUpperCase();
-			int letterPosition = selectedWord.indexOf(givenLetter);
+			letterPosition = selectedWord.indexOf(givenLetter);
 			System.out.println(letterPosition);
 			if (letterPosition != (-1) && signIsLetter(givenLetter) == true) {
 					userGuessedRight(); 
 				} 
-			else if(givenLetter.length() > 1  || signIsLetter(givenLetter) == false) {
+			else if (givenLetter.length() > 1  || signIsLetter(givenLetter) == false) {
 				userGaveIllegalCombinationOfSigns();
 				}
 			else {
@@ -60,18 +61,24 @@ public class Hangman extends ConsoleProgram {
     }
     
     public void userGuessedRight() {
-    		if (Objects.equals(givenLetter, selectedWord)) {
+    		if (Objects.equals(givenLetter, selectedWord)) {//user guessed the entire word correctly
     			remainingCharacters = 0;
     			System.out.println(remainingCharacters);
-    		} else {
-    			int sameLetters = 0;//placeholder - need to add a function that calculates occurrences of the same letter
+    		} else { //user guessed correctly a single letter
         		remainingCharacters = remainingCharacters - 1;
-        		System.out.println("Bravo, you have " + remainingCharacters + " letters to guess");
+        		int currentLetterPosition = letterPosition;//save locally the position of first occurrence of char in word
+        		for (int i = currentLetterPosition + 1; i < selectedWord.length(); i++) {
+        			String currentLetter = String.valueOf(selectedWord.charAt(i));
+        				if (Objects.equals(givenLetter, currentLetter)) {
+        					remainingCharacters = remainingCharacters - 1;
+        				}
+        		}
     		}
+    		System.out.println("You have " + remainingCharacters + " left");
     }
     
     public void userGuessedWrong() {
-    		extractLetter();
+    		char extractedChar = givenLetter.charAt(0);
     		canvas.noteIncorrectGuess(extractedChar);
     		remainingLives = remainingLives -1;
     		System.out.println("no bueno, letter is not here. You have " + remainingLives + " lives left");
@@ -79,7 +86,7 @@ public class Hangman extends ConsoleProgram {
     
     public void userGaveIllegalCombinationOfSigns() {
 		System.out.println("no bueno, You can only guess one sign at a time or the entire word. The only allowed signs are letters of latin alphabet and you can not leave the field empty!");
-}
+    }
     
     public void userWon() {
     		System.out.println("Bravo, you won the game. The word was obviously " + selectedWord);
@@ -97,8 +104,4 @@ public class Hangman extends ConsoleProgram {
     	 canvas = new HangmanCanvas();
     	 add(canvas);
     	}
-    
-    public void extractLetter() {
-    		extractedChar = givenLetter.charAt(0);
-    }
 }
