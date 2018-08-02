@@ -31,7 +31,6 @@ public class Hangman extends ConsoleProgram {
 		canvas.reset();
 		selectWord();
 		currentWord = showNumberOfLetters();
-		System.out.println("Selected Word is: " + selectedWord);
 		System.out.println("Scaffold is created but the canvas doesn't exist. " + canvas);
 		add(canvas);
 		canvas.reset();
